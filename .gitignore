@@ -1,4 +1,5 @@
 .vscode
-bin/
 pkg
 /bin
+/src/src
+/src/main
