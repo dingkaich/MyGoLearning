@@ -1,7 +1,9 @@
 package myprint
 
 import (
+	"flag"
 	"fmt"
+	"time"
 )
 
 func init() {
@@ -43,4 +45,14 @@ func TestGoRange() {
 	for i, c := range "go" {
 		fmt.Println(i, c)
 	}
+}
+
+var period = flag.Duration("period", 1*time.Second, "sleep period")
+
+func TestInterface() {
+	flag.Parse()
+	fmt.Printf("Sleeping for %v...", *period)
+	time.Sleep(*period)
+	fmt.Println()
+	
 }

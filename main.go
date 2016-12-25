@@ -64,5 +64,6 @@ func main() {
 	}
 
 	myprint.TestGoRange()
+	myprint.TestInterface()
 
 }
