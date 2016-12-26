@@ -36,7 +36,6 @@ func TestGoRange() {
 			fmt.Println("index:", i)
 		}
 	}
-	//range也可以用在map的键值对上。
 	kvs := map[string]string{"a": "apple", "b": "banana"}
 	for k, v := range kvs {
 		fmt.Printf("%s -> %s\n", k, v)
@@ -54,5 +53,62 @@ func TestInterface() {
 	fmt.Printf("Sleeping for %v...", *period)
 	time.Sleep(*period)
 	fmt.Println()
-	
+}
+
+// //channel close
+func Mychan() {
+	naturals := make(chan int, 1)
+	squares := make(chan int, 1)
+	// Counter
+	go func() {
+		for x := 0; x < 100; x++ {
+			naturals <- x
+		}
+		close(naturals)
+	}()
+	// Squarer
+	go func() {
+		for x := range naturals {
+			squares <- x * x
+		}
+		close(squares)
+	}()
+	// Printer (in main goroutine)
+	for x := range squares {
+		fmt.Println(x)
+	}
+}
+
+func counter(out chan<- int) {
+	for x := 0; x < 100; x++ {
+		out <- x
+		fmt.Println("counter", x)
+	}
+	close(out)
+}
+
+func squarer(out chan<- int, in <-chan int) {
+	// time.Sleep(30 * time.Second)
+	for v := range in {
+		out <- v * v
+		fmt.Println("squarer", v*v)
+
+	}
+	close(out)
+}
+
+func printer(in <-chan int) {
+	for v := range in {
+		fmt.Println(v)
+	}
+}
+
+func Mychan2() {
+	fmt.Println("mychan2")
+	naturals := make(chan int,0)
+	squares := make(chan int)
+	// mmap := make(map[int]int,3,5)
+	go counter(naturals)
+	go squarer(squares, naturals)
+	printer(squares)
 }

@@ -65,5 +65,7 @@ func main() {
 
 	myprint.TestGoRange()
 	myprint.TestInterface()
+	myprint.Mychan()
+	myprint.Mychan2()
 
 }
