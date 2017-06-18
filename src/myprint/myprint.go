@@ -151,5 +151,5 @@ func MyprintMain() {
 	fmt.Println(t)          // "3"
 	fmt.Printf("%v\n", t)   // "3"
 	fmt.Println(t.String()) // NOTE: "<int Value>"
-
+	
 }
