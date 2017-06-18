@@ -3,6 +3,8 @@ package myprint
 import (
 	"flag"
 	"fmt"
+	"myprint"
+	"reflect"
 	"time"
 )
 
@@ -105,10 +107,49 @@ func printer(in <-chan int) {
 
 func Mychan2() {
 	fmt.Println("mychan2")
-	naturals := make(chan int,0)
+	naturals := make(chan int, 0)
 	squares := make(chan int)
 	// mmap := make(map[int]int,3,5)
 	go counter(naturals)
 	go squarer(squares, naturals)
 	printer(squares)
+}
+
+func TestNew() {
+	fmt.Println("TestNew")
+	p := new(int)
+	*p = 2
+	fmt.Println(p)
+	fmt.Println(*p)
+
+}
+
+func TestSlice() {
+	a := [5]int{1, 2, 3, 4, 5}
+	fmt.Println("a[:2]=", a[:2])
+	fmt.Println("a[2:]=", a[2:5])
+
+}
+
+func MyprintMain() {
+
+	// myprint.TestGoRange()
+	// myprint.TestInterface()
+	// myprint.Mychan()
+	// myprint.Mychan2()
+	fmt.Println("good")
+	myprint.Myprint()
+
+	myprint.TestNew()
+	myprint.TestSlice()
+	fmt.Printf("%T\n", 3)
+	v := reflect.TypeOf(3)
+	fmt.Println(v.String())
+	fmt.Println(v)
+
+	t := reflect.ValueOf(3) // a reflect.Value
+	fmt.Println(t)          // "3"
+	fmt.Printf("%v\n", t)   // "3"
+	fmt.Println(t.String()) // NOTE: "<int Value>"
+
 }
