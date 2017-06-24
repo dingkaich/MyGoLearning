@@ -3,7 +3,6 @@ package myprint
 import (
 	"flag"
 	"fmt"
-	"myprint"
 	"reflect"
 	"time"
 )
@@ -133,15 +132,15 @@ func TestSlice() {
 
 func MyprintMain() {
 
-	// myprint.TestGoRange()
-	// myprint.TestInterface()
-	// myprint.Mychan()
-	// myprint.Mychan2()
+	// TestGoRange()
+	// .TestInterface()
+	// .Mychan()
+	// .Mychan2()
 	fmt.Println("good")
-	myprint.Myprint()
+	Myprint()
 
-	myprint.TestNew()
-	myprint.TestSlice()
+	TestNew()
+	TestSlice()
 	fmt.Printf("%T\n", 3)
 	v := reflect.TypeOf(3)
 	fmt.Println(v.String())
@@ -151,5 +150,5 @@ func MyprintMain() {
 	fmt.Println(t)          // "3"
 	fmt.Printf("%v\n", t)   // "3"
 	fmt.Println(t.String()) // NOTE: "<int Value>"
-	
+
 }

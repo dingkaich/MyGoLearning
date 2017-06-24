@@ -1,54 +1,54 @@
 package myos
 
 import (
-	"fmt"
+	"log"
 	"os"
 )
 
 func Myhostnanme() {
 
 	// hostname, _ := os.Hostname()
-	// fmt.Println(os.Hostname())
-	// fmt.Println(os.Getpagesize())
-	fmt.Println(os.Environ())
+	// log.Println(os.Hostname())
+	// log.Println(os.Getpagesize())
+	log.Println(os.Environ())
 	// //os.Clearenv()
 	// os.Setenv("dingkai", "good/boy")
-	// fmt.Println(os.Environ())
-	// fmt.Println(os.ExpandEnv("$dingkai=11"))
-	// fmt.Println(os.Getegid())
-	// fmt.Println(os.Getuid())
+	// log.Println(os.Environ())
+	// log.Println(os.ExpandEnv("$dingkai=11"))
+	// log.Println(os.Getegid())
+	// log.Println(os.Getuid())
 	// f, _ := os.Stat("test.log")
-	// fmt.Println(f)
+	// log.Println(f)
 	// f, _ = os.Lstat("test.log")
-	// fmt.Println(f)
-	// fmt.Println(f.Mode())
-	fmt.Println(os.IsPathSeparator(','))
+	// log.Println(f)
+	// log.Println(f.Mode())
+	log.Println(os.IsPathSeparator(','))
 	os.MkdirAll("dingkai", 0777)
 	os.Remove("dingkai")
-	fmt.Println(os.TempDir())
+	log.Println(os.TempDir())
 	// file, _ := os.Create("dingki.txt")
 	// file.Close()
 	file1, err := os.OpenFile("dingki.txt", os.O_CREATE|os.O_RDWR, 0777)
 	file1.Write([]byte("good boy"))
 	if err != nil {
-		fmt.Print(err)
+		log.Print(err)
 	}
-	fmt.Println(file1.Fd())
+	log.Println(file1.Fd())
 	// file1.Sync()
 	file1.Seek(0, 0)
 	// var str [1024]byte
 	str := make([]byte, 20)
 	count, err := file1.Read(str)
 	if err != nil {
-		fmt.Println(count, err)
+		log.Println(count, err)
 	}
 
-	fmt.Println(string(str))
+	log.Println(string(str))
 
 	// f1, _ := file.Stat()
-	// fmt.Println(f1.Mode())
+	// log.Println(f1.Mode())
 	f2, _ := file1.Stat()
-	fmt.Println(f2.Mode())
+	log.Println(f2.Mode())
 	file1.Close()
 
 	dir, _ := os.Getwd()
@@ -57,8 +57,8 @@ func Myhostnanme() {
 
 	f, _ := file1.Readdir(0)
 	for _, j := range f {
-		fmt.Println(j.Name(), "\t", j.Mode(), j.ModTime(), j.Size())
-		// fmt.Println(i, j)
+		log.Println(j.Name(), "\t", j.Mode(), j.ModTime(), j.Size())
+		// log.Println(i, j)
 
 	}
 
