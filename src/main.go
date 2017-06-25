@@ -1,10 +1,8 @@
 package main
 
-import (
-	"log"
-	"mybytes"
-	//	"github.com/beego/logs"
-)
+import "myio"
+
+//	"github.com/beego/logs"
 
 func main() {
 	// log.Println("test astaxie's log")
@@ -20,11 +18,12 @@ func main() {
 	// logs.Error(1024, "is a very", "good game")
 	// logs.Critical("oh,crash")
 
-	log.Println("test stand log:")
-	log.Println("good boy")
+	// log.Println("test stand log:")
+	// log.Println("good boy")
 
 	// myos.Myhostnanme()
 	// myos.Myosexec()
 	// mystrings.Mystringsmain()
-	mybytes.MybythesMain()
+	// mybytes.MybythesMain()
+	myio.MyioMain()
 }
