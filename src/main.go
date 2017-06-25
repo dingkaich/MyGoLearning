@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"mystrings"
+	"mybytes"
 	//	"github.com/beego/logs"
 )
 
@@ -25,6 +25,6 @@ func main() {
 
 	// myos.Myhostnanme()
 	// myos.Myosexec()
-	mystrings.Mystringsmain()
-
+	// mystrings.Mystringsmain()
+	mybytes.MybythesMain()
 }
