@@ -51,4 +51,8 @@ func MyioMain() {
 
 	io.WriteString(byt1, "a1111")
 	log.Println(byt1.String())
+
+	// //尝试一下pipe管道的用法
+	// pipe_reader, pipe_writer := io.Pipe()
+	// pipe_writer.Write(data []byte)
 }

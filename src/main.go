@@ -1,6 +1,6 @@
 package main
 
-import "myio"
+import "mytime"
 
 //	"github.com/beego/logs"
 
@@ -25,5 +25,7 @@ func main() {
 	// myos.Myosexec()
 	// mystrings.Mystringsmain()
 	// mybytes.MybythesMain()
-	myio.MyioMain()
+	// myio.MyioMain()
+	// myioutil.MyIouitlMain()
+	mytime.MyTimeMain()
 }
