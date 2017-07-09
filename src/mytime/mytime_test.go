@@ -1,6 +1,9 @@
 package mytime
 
-import "testing"
+import (
+	"log"
+	"testing"
+)
 
 func Test_timer1(t *testing.T) {
 	tests := []struct {
@@ -13,4 +16,10 @@ func Test_timer1(t *testing.T) {
 
 		timer1()
 	}
+}
+
+func Test_timer2(t *testing.T) {
+	a := []byte{1, 2, 3, 4, 5}
+	log.Println(a[0:0])
+	log.Println(a[1:3])
 }
