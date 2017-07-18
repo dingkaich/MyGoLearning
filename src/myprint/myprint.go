@@ -152,3 +152,13 @@ func MyprintMain() {
 	fmt.Println(t.String()) // NOTE: "<int Value>"
 
 }
+
+func Myfmt() {
+	err := fmt.Errorf("dingkai is a goodboy\n")
+	log.Println(err)
+
+	var a, b, c int
+	fmt.Fscanln(os.Stdin, &a, &b, &c)
+	fmt.Println(a, b, c)
+
+}
