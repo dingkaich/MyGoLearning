@@ -2,12 +2,7 @@ package main
 
 import (
 	"log"
-	"mybytes"
-	"myio"
-	"myioutil"
-	"myos"
-	"mystrings"
-	"mytime"
+	"mynet"
 
 	"github.com/beego/logs"
 )
@@ -31,11 +26,20 @@ func main() {
 	log.Println("test stand log:")
 	log.Println("good boy")
 
-	myos.Myhostnanme()
-	myos.Myosexec()
-	mystrings.Mystringsmain()
-	mybytes.MybythesMain()
-	myio.MyioMain()
-	myioutil.MyIouitlMain()
-	mytime.MyTimeMain()
+	// myos.Myhostnanme()
+	// myos.Myosexec()
+	// mystrings.Mystringsmain()
+	// mybytes.MybythesMain()
+	// myio.MyioMain()
+	// myioutil.MyIouitlMain()
+	// mytime.MyTimeMain()
+	// var i int = 0
+	// time.After(time.Second*5)
+	// for {
+	// 	i++
+	// 	fmt.Println("good", i)
+	// }
+
+	mynet.MyNetMain()
+
 }

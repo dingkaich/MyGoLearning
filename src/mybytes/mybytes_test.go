@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"testing"
 )
 
@@ -91,12 +92,14 @@ func TestReaderAt(t *testing.T) {
 		b := make([]byte, tt.n)
 		rn, err := r.ReadAt(b, tt.off)
 		got := string(b[:rn])
+		log.Println(got)
 		if got != tt.want {
 			t.Errorf("%d. got %q; want %q", i, got, tt.want)
 		}
 		if fmt.Sprintf("%v", err) != fmt.Sprintf("%v", tt.wanterr) {
 			t.Errorf("%d. got error = %v; want %v", i, err, tt.wanterr)
 		}
+
 	}
 }
 
@@ -116,6 +119,7 @@ func TestReaderAtConcurrent(t *testing.T) {
 	}
 	wg.Wait()
 }
+
 
 func TestEmptyReaderConcurrent(t *testing.T) {
 	// Test for the race detector, to verify a Read that doesn't yield any bytes
