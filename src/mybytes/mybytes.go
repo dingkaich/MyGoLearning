@@ -78,4 +78,7 @@ func MybythesMain() {
 	// log.Println(string(bb))
 	b1.WriteTo(os.Stderr)
 
+	asdf := bytes.NewBuffer(nil)
+	asdf.WriteString("doof")
+	log.Println(asdf.String())
 }

@@ -103,6 +103,10 @@ func TestReaderAt(t *testing.T) {
 	}
 }
 
+func TestBuffer(t *testing.T) {
+	buf,err:= bytes.NewBuffer(buf []byte)
+}
+
 /*
 func TestReaderAtConcurrent(t *testing.T) {
 	// Test for the race detector, to verify ReadAt doesn't mutate
