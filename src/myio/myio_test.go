@@ -13,3 +13,11 @@ func TestMyioMain(t *testing.T) {
 		MyioMain()
 	}
 }
+
+func Testaa(t *testing.T) {
+	i := channelLens(20, 12, 12)
+	t.Errorf("%d", i)
+	i = channelLens(10, 12, 12)
+	t.Errorf("%d", i)
+
+}

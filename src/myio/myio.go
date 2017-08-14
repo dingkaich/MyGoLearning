@@ -142,3 +142,10 @@ func MyChanBuffer() {
 		time.Sleep(time.Second)
 	}
 }
+
+func ChannelLens(i ...int64) int64 {
+	msgChanLen := append(i, 0)[0]
+	log.Println(msgChanLen)
+	return msgChanLen
+
+}

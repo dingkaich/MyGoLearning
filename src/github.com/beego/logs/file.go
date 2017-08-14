@@ -112,6 +112,43 @@ func (w *fileLogWriter) startLogger() error {
 	return w.initFd()
 }
 
+func (w *fileLogWriter) createLogFile() (*os.File, error) {
+	// Open the log file
+	perm, err := strconv.ParseInt(w.Perm, 8, 64)
+	if err != nil {
+		return nil, err
+	}
+	fd, err := os.OpenFile(w.Filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, os.FileMode(perm))
+	if err == nil {
+		// Make sure file perm is user set perm cause of `os.OpenFile` will obey umask
+		os.Chmod(w.Filename, os.FileMode(perm))
+	}
+	return fd, err
+}
+
+func (w *fileLogWriter) initFd() error {
+	fd := w.fileWriter
+	fInfo, err := fd.Stat()
+	if err != nil {
+		return fmt.Errorf("get stat err: %s", err)
+	}
+	w.maxSizeCurSize = int(fInfo.Size())
+	w.dailyOpenTime = time.Now()
+	w.dailyOpenDate = w.dailyOpenTime.Day()
+	w.maxLinesCurLines = 0
+	if w.Daily {
+		go w.dailyRotate(w.dailyOpenTime)
+	}
+	if fInfo.Size() > 0 {
+		count, err := w.lines()
+		if err != nil {
+			return err
+		}
+		w.maxLinesCurLines = count
+	}
+	return nil
+}
+
 func (w *fileLogWriter) needRotate(size int, day int) bool {
 	return (w.MaxLines > 0 && w.maxLinesCurLines >= w.MaxLines) ||
 		(w.MaxSize > 0 && w.maxSizeCurSize >= w.MaxSize) ||
@@ -150,43 +187,6 @@ func (w *fileLogWriter) WriteMsg(when time.Time, msg string, level int) error {
 	}
 	w.Unlock()
 	return err
-}
-
-func (w *fileLogWriter) createLogFile() (*os.File, error) {
-	// Open the log file
-	perm, err := strconv.ParseInt(w.Perm, 8, 64)
-	if err != nil {
-		return nil, err
-	}
-	fd, err := os.OpenFile(w.Filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, os.FileMode(perm))
-	if err == nil {
-		// Make sure file perm is user set perm cause of `os.OpenFile` will obey umask
-		os.Chmod(w.Filename, os.FileMode(perm))
-	}
-	return fd, err
-}
-
-func (w *fileLogWriter) initFd() error {
-	fd := w.fileWriter
-	fInfo, err := fd.Stat()
-	if err != nil {
-		return fmt.Errorf("get stat err: %s", err)
-	}
-	w.maxSizeCurSize = int(fInfo.Size())
-	w.dailyOpenTime = time.Now()
-	w.dailyOpenDate = w.dailyOpenTime.Day()
-	w.maxLinesCurLines = 0
-	if w.Daily {
-		go w.dailyRotate(w.dailyOpenTime)
-	}
-	if fInfo.Size() > 0 {
-		count, err := w.lines()
-		if err != nil {
-			return err
-		}
-		w.maxLinesCurLines = count
-	}
-	return nil
 }
 
 func (w *fileLogWriter) dailyRotate(openTime time.Time) {

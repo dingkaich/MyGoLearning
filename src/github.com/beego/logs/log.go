@@ -142,6 +142,7 @@ var logMsgPool *sync.Pool
 // channelLen means the number of messages in chan(used where asynchronous is true).
 // if the buffering chan is full, logger adapters write to file or other way.
 func NewLogger(channelLens ...int64) *BeeLogger {
+
 	bl := new(BeeLogger)
 	bl.level = LevelDebug
 	bl.loggerFuncCallDepth = 2
