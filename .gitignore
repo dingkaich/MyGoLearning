@@ -4,5 +4,5 @@ pkg
 /src/src
 /src/main
 debug
-/vendor
+/src/vendor
 .idea
