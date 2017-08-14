@@ -5,3 +5,4 @@ pkg
 /src/main
 debug
 /vendor
+.idea
