@@ -8,14 +8,18 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 func MyhttpMain() {
 	// listen0()
 	// listen1()
 	// listen2()
-	learn3()
+	// learn3()
+	// learn4()
+	learn5()
 }
 
 ///////////////////////////////////////////////////////
@@ -25,6 +29,9 @@ func listen0() {
 	http.HandleFunc("/hello/dingkai", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("good boy"))
 	})
+
+	http.Handle("/", http.FileServer(http.Dir("F:\\百度云盘")))
+	http.Handle("/tmpfiles/", http.StripPrefix("/tmpfiles/", http.FileServer(http.Dir("F:\\百度云盘\\魏小玲891126"))))
 	err := http.ListenAndServe(":12345", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
@@ -116,7 +123,7 @@ func learn3() {
 	// buf := bytes.NewBuffer(nil)
 	// buf.WriteString("dingkai")
 
-	req, err := http.NewRequest("GET", "http://www.baidu.com", nil)
+	req, err := http.Get("http://www.baidu.com")
 	// defer req.Body.Close()
 	if err != nil {
 		log.Println(err)
@@ -127,8 +134,66 @@ func learn3() {
 	defer f.Close()
 	io.Copy(f, req.Body)
 	f.WriteString("============cookies===================\n")
+
+	f.WriteString("cookielen=" + strconv.Itoa(len(req.Cookies())) + "\n")
 	for k, v := range req.Cookies() {
-		f.WriteString(strconv.Itoa(k) + v.String())
+		f.WriteString(strconv.Itoa(k) + "::\n" + "nameis" + v.Name + "\n" + v.String() + "\n")
+	}
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+func learn4() {
+
+	http.Handle("/", http.FileServer(http.Dir("E:\\")))
+	http.ListenAndServe(":12345", nil)
+	// http.Handle("/LinuxIMG/", http.StripPrefix("/LinuxIMG/", http.FileServer(http.Dir("F:\\LinuxIMG"))))
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//isfileexist
+//返回true 文件存在，返回false文件不存在
+func isfileexist(name string) bool {
+	f, err := os.Open(name)
+	defer f.Close()
+
+	if err != nil && os.IsNotExist(err) {
+		return false
+	}
+
+	return true
+
+}
+
+func readfile(res http.ResponseWriter, req *http.Request) {
+	//提取请求的URL
+	filename := "G:/" + req.URL.Path
+	filename, _ = filepath.Abs(filename)
+	strings.Replace(filename, "/", "\\", -1)
+
+	if isfileexist(filename) {
+
+		http.ServeFile(res, req, filename)
+	} else {
+		log.Println(filename, "not exist")
+	}
+
+	return
+
+}
+
+func learn5() {
+
+	http.HandleFunc("/", readfile)
+	http.HandleFunc("/hello/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("good boy"))
+	})
+
+	err := http.ListenAndServe(":12345", nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
 	}
 
 }
