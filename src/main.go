@@ -1,6 +1,6 @@
 package main
 
-import "myhttp"
+import "myfileserver"
 
 //	"github.com/beego/logs"
 
@@ -38,6 +38,7 @@ func main() {
 	// }
 
 	// mynet.MyNetMain()
-	myhttp.MyhttpMain()
+	// myhttp.MyhttpMain()
+	myfileserver.Myftpmain()
 	// select {}
 }

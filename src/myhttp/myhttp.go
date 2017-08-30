@@ -197,3 +197,19 @@ func learn5() {
 	}
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+func learn6() {
+	addr := "localhost:8080"
+
+	http.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
+		str := "if you want to view files,please go to  " + addr + "/viewfile\n"
+		str1 := "if you want to upload files,please go to  " + addr + "/upload\n"
+
+		res.Write([]byte(str + str1))
+
+	})
+
+	http.ListenAndServe(addr, nil)
+
+}
