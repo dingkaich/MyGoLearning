@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io"
 	"log"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,12 +13,19 @@ import (
 	"time"
 )
 
+func Deafult(res http.ResponseWriter, req *http.Request) {
+	log.Println("Deafult", req.URL.String())
+	if req.URL.Path == "" || req.URL.Path == "/" {
+		Index(res, req)
+	} else {
+		ViewFile(res, req)
+	}
+
+	return
+}
+
 func Index(res http.ResponseWriter, req *http.Request) {
-	log.Println("index", req.URL.String())
 
-	// if req.URL.String() != ""
-
-	// defer req.Body.Close()
 	tmp, err := template.ParseFiles("./myfileserver/htmlfile/index.html")
 	if err != nil {
 		res.Write([]byte("get index html error"))
@@ -25,7 +33,7 @@ func Index(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	tmp.Execute(res, nil)
-	return
+
 }
 
 func ViewFile(res http.ResponseWriter, req *http.Request) {
@@ -34,7 +42,9 @@ func ViewFile(res http.ResponseWriter, req *http.Request) {
 	if strings.HasPrefix(req.URL.String(), "/viewfile") {
 		http.StripPrefix("/viewfile", http.FileServer(http.Dir("./myfileserver/upload/"))).ServeHTTP(res, req)
 	} else {
+		res.Header().Set("Content-Type", "application/octet-stream") //设置文件下载类型
 		http.FileServer(http.Dir("./myfileserver/upload/")).ServeHTTP(res, req)
+		log.Println(req.Header.Get("Content-Type"), "|", res.Header().Get("Content-Type"))
 	}
 	return
 }
@@ -56,11 +66,20 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 	//POST
 	case http.MethodPost:
 		log.Println("post")
-		req.ParseMultipartForm(1 << 10)         //设置下内存缓存大小，默认为1G
+		req.ParseMultipartForm(1 << 10) //设置下内存缓存大小，默认为1G
+		log.Println(req)
+
 		f, h, err := req.FormFile("uploadfile") //该值有html中定义
 		// defer f.Close()
-		if err != nil {
-			fmt.Fprintln(res, "uploadfile", h.Filename, " failed")
+		if err != nil || f == nil || h == nil {
+			// if req.Form
+			fmt.Fprintln(res, "uploadfile", func(i *multipart.FileHeader) string {
+				if i == nil {
+					return "N/A"
+				} else {
+					return i.Filename
+				}
+			}(h), " failed")
 			return
 		}
 
@@ -78,7 +97,7 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 			return
 		}
 		filedir, _ := filepath.Abs("./myfileserver/upload/" + h.Filename)
-		fmt.Fprintf(res, "%v", h.Filename+"上传完成,服务器地址:"+filedir)
+		fmt.Fprintf(res, "%v\n", h.Filename+"上传完成,服务器地址:"+filedir)
 	default:
 		fmt.Fprintln(res, "only support get and post")
 		return
@@ -92,7 +111,7 @@ func Myftpmain() {
 
 	Mux := http.NewServeMux()
 	//根目录是主页
-	Mux.HandleFunc("/", Index)
+	Mux.HandleFunc("/", Deafult)
 	Mux.HandleFunc("/viewfile", ViewFile)
 	Mux.HandleFunc("/viewfile/", ViewFile)
 	Mux.HandleFunc("/uploadfile", UploadFile)
