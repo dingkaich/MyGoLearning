@@ -1,9 +1,11 @@
 package myfileserver
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
+	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -15,6 +17,7 @@ import (
 
 func Deafult(res http.ResponseWriter, req *http.Request) {
 	log.Println("Deafult", req.URL.String())
+	log.Println("head", req.Header)
 	if req.URL.Path == "" || req.URL.Path == "/" {
 		Index(res, req)
 	} else {
@@ -49,6 +52,8 @@ func ViewFile(res http.ResponseWriter, req *http.Request) {
 	return
 }
 
+//靠齐restful接口
+//文件的查增删
 func UploadFile(res http.ResponseWriter, req *http.Request) {
 	// defer req.Body.Close()
 	switch req.Method {
@@ -98,6 +103,27 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 		}
 		filedir, _ := filepath.Abs("./myfileserver/upload/" + h.Filename)
 		fmt.Fprintf(res, "%v\n", h.Filename+"上传完成,服务器地址:"+filedir)
+
+	//DELETE
+	case http.MethodDelete:
+		//获取文件名
+		filename := req.URL.Path
+		filename = "./myfileserver/upload" + strings.TrimPrefix(filename, "/uploadfile")
+
+		log.Println("detele", filename)
+		_, err := os.Stat(filename)
+		if err != nil || os.IsNotExist(err) {
+			fmt.Fprintf(res, "delete [%s] ,But file not exist in server", filename)
+			http.Error(res, "delete failed", http.StatusInternalServerError)
+		}
+
+		err = os.Remove(filename)
+		if err != nil {
+			fmt.Fprintf(res, "file [%s] delete failed ", filename)
+			http.Error(res, "delete failed", http.StatusInternalServerError)
+		}
+		//
+		fmt.Fprintf(res, "file [%s] delete success ", filename)
 	default:
 		fmt.Fprintln(res, "only support get and post")
 		return
@@ -105,6 +131,37 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 	}
 
 	return
+}
+
+type config_parm struct {
+	Ip       string `json:"ip"`
+	Port     string `json:"port"`
+	Username string `json:"username"`
+	Passwd   string `json:"passwd"`
+}
+
+func loadconfig() *config_parm {
+	var conf_bean config_parm
+	data, err := ioutil.ReadFile("config.json")
+	if err != nil {
+		goto deafultval
+	}
+
+	err = json.Unmarshal(data, conf_bean)
+	if err != nil {
+		goto deafultval
+	}
+
+	return &conf_bean
+
+deafultval:
+	return &config_parm{
+		Ip:       "localhost",
+		Port:     "6060",
+		Username: "dingkai",
+		Passwd:   "12345",
+	}
+
 }
 
 func Myftpmain() {
@@ -115,9 +172,10 @@ func Myftpmain() {
 	Mux.HandleFunc("/viewfile", ViewFile)
 	Mux.HandleFunc("/viewfile/", ViewFile)
 	Mux.HandleFunc("/uploadfile", UploadFile)
+	Mux.HandleFunc("/uploadfile/", UploadFile)
 
 	server := http.Server{
-		Addr:         ":6060",
+		Addr:         localconf.Ip + ":" + localconf.Port,
 		Handler:      Mux,
 		ReadTimeout:  time.Second * 10,
 		WriteTimeout: time.Second * 20,
@@ -127,4 +185,12 @@ func Myftpmain() {
 	if err != nil {
 		log.Println(err)
 	}
+}
+
+var localconf *config_parm
+
+func init() {
+	//加載配置項
+	localconf = loadconfig()
+
 }
