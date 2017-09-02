@@ -6,3 +6,4 @@ pkg
 debug
 /src/vendor
 .idea
+/src/myfileserver/upload
