@@ -39,6 +39,6 @@ func main() {
 
 	// mynet.MyNetMain()
 	// myhttp.MyhttpMain()
-	myfileserver.Myftpmain()
+	myfileserver.FileserverMain()
 	// select {}
 }
