@@ -1,6 +1,7 @@
 package mytime
 
 import (
+	"crypto/md5"
 	"fmt"
 	"testing"
 	"time"
@@ -42,5 +43,14 @@ func Test_timer3(t *testing.T) {
 	c := make(chan bool, 1)
 	c <- true
 	fmt.Println("good")
+
+}
+func Test_timer4(t *testing.T) {
+	str := "dasfasdfdasf"
+	h := md5.Sum([]byte(str))
+	fmt.Println(h)
+	fmt.Println(fmt.Sprintf("%x", h))
+
+	// fmt.Println(string(h))
 
 }

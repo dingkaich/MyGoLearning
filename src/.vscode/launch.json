@@ -9,6 +9,7 @@
             "remotePath": "",
             "port": 2345,
             "host": "127.0.0.1",
+            // "program": "${workspaceRoot}\\vendor\\github.com\\mattn\\go-sqlite3\\_example\\simple",
             "program": "${workspaceRoot}",
             "env": {
                 "GOPATH": "h:\\Github\\MyGoLearning"

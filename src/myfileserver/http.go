@@ -1,12 +1,14 @@
 package myfileserver
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
 	"log"
 	"mime/multipart"
+	mysql "myfileserver/sqlite"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -110,6 +112,25 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+		//查询
+		queryres, err := mysql.Queryfile(h.Filename)
+		if queryres != nil {
+			for _, v := range queryres {
+				file_res := FileOpStat{
+					Filename:     h.Filename,
+					Filepath:     v.Fileserverpath,
+					Uploadstatus: "upload failed",
+					HttpStatus:   http.StatusOK,
+					Description:  fmt.Sprintf("%s%d bytes", h.Filename+"已经存在,", "上传时间:", v.Date),
+				}
+				// resdata, _ := json.Marshal(file_res)
+				resdata, _ := json.MarshalIndent(file_res, "", "\t")
+				res.Write(resdata)
+			}
+
+			return
+		}
+
 		file, err := os.OpenFile("./myfileserver/upload/"+h.Filename, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666)
 		defer file.Close()
 		if err != nil {
@@ -136,6 +157,21 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 		resdata, _ := json.MarshalIndent(file_res, "", "\t")
 
 		res.Write(resdata)
+
+		//本地有了，那么来存数据库吧
+		data := new(mysql.Fileinfo)
+		data.Filename = h.Filename
+		data.Fileserverpath = filedir
+		md5val := md5.New()
+		io.Copy(md5val, file)
+		data.Filemd5 = fmt.Sprintf("%x", md5val.Sum(nil))
+		log.Println("md5:", data.Filemd5)
+		data.ServerIp = localconf.Ip
+		data.ClientIp = req.RemoteAddr
+		err = mysql.Addfile(data)
+		if err != nil {
+			log.Println(err)
+		}
 
 	//DELETE
 	case http.MethodDelete:
@@ -188,7 +224,7 @@ func UploadFile(res http.ResponseWriter, req *http.Request) {
 		resdata, _ := json.MarshalIndent(file_res, "", "\t")
 
 		res.Write(resdata)
-
+		mysql.Deletefile(filename)
 	default:
 		fmt.Fprintln(res, "only support get and post")
 
