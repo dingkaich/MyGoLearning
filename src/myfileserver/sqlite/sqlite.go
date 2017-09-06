@@ -83,6 +83,18 @@ func DBfinish() {
 	Dbsqlite = nil
 }
 
+func QueryUserInfo(username string) []byte {
+	rwlock.RLock()
+	defer rwlock.RUnlock()
+	var passwd []byte
+	err := Dbsqlite.QueryRow("select passwd from userinfo where username=?", username).Scan(&passwd)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	return passwd
+}
+
 func Addfile(data *Fileinfo) error {
 	rwlock.Lock()
 	defer rwlock.Unlock()

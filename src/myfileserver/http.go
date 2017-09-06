@@ -1,8 +1,11 @@
 package myfileserver
 
 import (
+	"bytes"
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html/template"
 	"io"
@@ -28,13 +31,41 @@ func Deafult(res http.ResponseWriter, req *http.Request) {
 	return
 }
 
-func Index(res http.ResponseWriter, req *http.Request) {
+//为了减少内存copy，使用指针，需要特别注意哦
+func AuthAccount(res http.ResponseWriter, req *http.Request) error {
+
 	auth := req.Header.Get("Authorization")
 	if len(auth) == 0 {
 		res.Header().Set("WWW-Authenticate", `Basic realm="No User Login"`)
 		res.WriteHeader(http.StatusUnauthorized)
+		log.Println("no auth info")
+		return errors.New("no auth info ")
+	}
+	auth = strings.TrimPrefix(auth, "Basic")
+	auth = strings.TrimSpace(auth)
+	auth_data, err := base64.StdEncoding.DecodeString(auth)
+	if err != nil {
+		res.WriteHeader(http.StatusUnauthorized)
+		log.Println("decode failed", auth)
+		return errors.New("DecodeString failed")
+	}
+	name := bytes.Split(auth_data, []byte(":"))[0]
+	passwd := bytes.Split(auth_data, []byte(":"))[1]
+
+	dbpasswd := mysql.QueryUserInfo(string(name))
+	if bytes.Compare(passwd, dbpasswd) != 0 {
+		res.WriteHeader(http.StatusUnauthorized)
+		return errors.New("auth failed")
+	}
+	return nil
+}
+
+func Index(res http.ResponseWriter, req *http.Request) {
+	if AuthAccount(res, req) != nil {
+		log.Println("AuthAccount failed")
 		return
 	}
+	// paswd := mysql.QueryUserInfo(auth)
 
 	tmp, err := template.ParseFiles("./myfileserver/htmlfile/index.html")
 	if err != nil {
@@ -47,6 +78,10 @@ func Index(res http.ResponseWriter, req *http.Request) {
 }
 
 func ViewFile(res http.ResponseWriter, req *http.Request) {
+	if AuthAccount(res, req) != nil {
+		log.Println("AuthAccount failed")
+		return
+	}
 	// defer req.Body.Close()
 	log.Println("view")
 	if strings.HasPrefix(req.URL.String(), "/viewfile") {
@@ -70,6 +105,10 @@ type FileOpStat struct {
 //靠齐restful接口
 //文件的查增删
 func UploadFile(res http.ResponseWriter, req *http.Request) {
+	if AuthAccount(res, req) != nil {
+		log.Println("AuthAccount failed")
+		return
+	}
 	defer req.Body.Close()
 	switch req.Method {
 	//GET
