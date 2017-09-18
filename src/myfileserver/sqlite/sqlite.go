@@ -89,7 +89,7 @@ func QueryUserInfo(username string) []byte {
 	var passwd []byte
 	err := Dbsqlite.QueryRow("select passwd from userinfo where username=?", username).Scan(&passwd)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		return nil
 	}
 	return passwd

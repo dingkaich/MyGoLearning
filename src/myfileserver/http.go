@@ -53,7 +53,8 @@ func AuthAccount(res http.ResponseWriter, req *http.Request) error {
 	passwd := bytes.Split(auth_data, []byte(":"))[1]
 
 	dbpasswd := mysql.QueryUserInfo(string(name))
-	if bytes.Compare(passwd, dbpasswd) != 0 {
+
+	if len(dbpasswd) == 0 || bytes.Compare(passwd, dbpasswd) != 0 {
 		res.WriteHeader(http.StatusUnauthorized)
 		return errors.New("auth failed")
 	}

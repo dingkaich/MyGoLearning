@@ -40,7 +40,7 @@ func Test_timer2(t *testing.T) {
 
 func Test_timer3(t *testing.T) {
 	// c := make(chan bool)
-	c := make(chan bool, 1)
+	c := make(chan bool)
 	c <- true
 	fmt.Println("good")
 
