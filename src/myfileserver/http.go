@@ -11,7 +11,7 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
-	mysql "myfileserver/sqlite"
+	mysql "myfileserver/fileredis"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -279,7 +279,7 @@ func Myhttpmain(localconf *config_parm) {
 		log.Println("localconf  is nil")
 		return
 	}
-
+	fmt.Println("currentdir=", os.Args[0])
 	Mux := http.NewServeMux()
 	//根目录是主页
 	Mux.HandleFunc("/", Deafult)

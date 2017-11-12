@@ -3,6 +3,10 @@ package fileredis
 import (
 	"fmt"
 
+	//"errors"
+
+	"time"
+
 	"github.com/go-redis/redis"
 )
 
@@ -23,8 +27,8 @@ type Userinfo struct {
 var client *redis.Client
 
 func DBinit() {
-	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:7000",
+	client = redis.NewClient(&redis.Options{
+		Addr:     "192.168.0.104:6379",
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
@@ -58,7 +62,7 @@ func QueryUserInfo(username string) []byte {
 }
 
 func AddUserInfo(username, passwd string) error {
-	err := client.SetNX(username, passwd, 0).Err()
+	err := client.SetNX(username, passwd, time.Duration(0)).Err()
 	if err != nil {
 		return err
 	}
@@ -91,7 +95,7 @@ func Addfile(data *Fileinfo) error {
 
 func Queryfile(filename string) ([]Fileinfo, error) {
 	val, err := client.HGetAll(filename).Result()
-	if err != nil {
+	if err != nil || val == nil || len(val) == 0 {
 		return nil, err
 	}
 
