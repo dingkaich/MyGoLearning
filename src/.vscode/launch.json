@@ -12,7 +12,7 @@
             // "program": "${workspaceRoot}\\vendor\\github.com\\mattn\\go-sqlite3\\_example\\simple",
             "program": "${workspaceRoot}",
             "env": {
-                "GOPATH": "h:\\Github\\MyGoLearning"
+                "GOPATH": "/Users/dingkai/Golang/MyGoLearning"
                 },
             "args": [],
             "showLog": false

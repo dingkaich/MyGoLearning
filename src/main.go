@@ -23,10 +23,13 @@ func main() {
 	// logs.Info("god")
 
 	//  myos.Myhostnanme()
+	//  myos.Myhostnanme()
+	//fmt.Println("dsga")
 	// // myos.Myosexec()
 	// // mystrings.Mystringsmain()
 	// // mybytes.MybythesMain()
-	// // myio.MyioMain()
+	//  myio.MyioMain()
+
 	// myio.ChannelLens(10, 20, 30)
 	// myioutil.MyIouitlMain()
 	// mytime.MyTimeMain()
@@ -41,4 +44,5 @@ func main() {
 	// myhttp.MyhttpMain()
 	myfileserver.FileserverMain()
 	// select {}
+
 }

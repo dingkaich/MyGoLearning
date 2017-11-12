@@ -3,10 +3,10 @@ package myprint
 import (
 	"flag"
 	"fmt"
-	"reflect"
-	"time"
 	"log"
 	"os"
+	"reflect"
+	"time"
 )
 
 func init() {
