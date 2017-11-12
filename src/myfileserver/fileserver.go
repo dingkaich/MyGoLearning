@@ -3,7 +3,7 @@ package myfileserver
 import (
 	"encoding/json"
 	"io/ioutil"
-	"myfileserver/sqlite"
+	mysql "myfileserver/sqlite"
 )
 
 type config_parm struct {
@@ -40,7 +40,7 @@ deafultval:
 var localconf *config_parm
 
 func FileserverMain() {
-	sqlite.DBinit()
+	mysql.DBinit()
 	localconf = loadconfig()
 	Myhttpmain(localconf)
 
