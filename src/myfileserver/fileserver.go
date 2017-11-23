@@ -3,7 +3,7 @@ package myfileserver
 import (
 	"encoding/json"
 	"io/ioutil"
-	mysql "myfileserver/sqlite"
+	mysql "myfileserver/fileredis"
 )
 
 type config_parm struct {
