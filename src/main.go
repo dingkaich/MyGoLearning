@@ -1,6 +1,6 @@
 package main
 
-import "myredis"
+import "mycawler"
 
 //	"github.com/beego/logs"
 
@@ -43,7 +43,8 @@ func main() {
 	// mynet.MyNetMain()
 	// myhttp.MyhttpMain()
 	// myfileserver.FileserverMain()
-	myredis.MyRedisMain()
+	// myredis.MyRedisMain()
+	mycawler.MyMain()
 	// select {}
 
 }
