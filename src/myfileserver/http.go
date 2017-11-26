@@ -11,7 +11,7 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
-	mysql "myfileserver/fileredis"
+	mysql "myfileserver/sqlite"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -86,7 +86,10 @@ func ViewFile(res http.ResponseWriter, req *http.Request) {
 	// defer req.Body.Close()
 	log.Println("view")
 	if strings.HasPrefix(req.URL.String(), "/viewfile") {
+		// 这块用于展示
+		// http.StripPrefix("/viewfile", http.FileServer(http.Dir("./myfileserver/upload/"))).ServeHTTP(res, req)
 		http.StripPrefix("/viewfile", http.FileServer(http.Dir("./myfileserver/upload/"))).ServeHTTP(res, req)
+
 	} else {
 		res.Header().Set("Content-Type", "application/octet-stream") //设置文件下载类型
 		http.FileServer(http.Dir("./myfileserver/upload/")).ServeHTTP(res, req)
