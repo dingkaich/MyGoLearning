@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"myio"
 )
 
 //	"github.com/beego/logs"
+var testmap map[string]int
 
 //slice的坑要牢记
 func mytest() {
@@ -25,6 +27,17 @@ func mytest() {
 	a = append(a, 0)
 	fmt.Println(a, b)
 
+	if testmap == nil {
+		fmt.Println("make map")
+		testmap = make(map[string]int)
+	}
+
+	testmap["adsf"] = 1
+	aaaa := myio.GetActiveLicenseKeyItem()
+	if aaaa == nil {
+		fmt.Println("nil")
+	}
+	fmt.Println(aaaa, "==", len(aaaa))
 	// var aa [10]int
 	// aa = append(aa, 1)
 	// fmt.Println(aa)
