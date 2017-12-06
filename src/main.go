@@ -1,47 +1,46 @@
 package main
 
 import (
-	"fmt"
 	"myio"
 )
 
-//	"github.com/beego/logs"
-var testmap map[string]int
+// //	"github.com/beego/logs"
+// var testmap map[string]int
 
-//slice的坑要牢记
-func mytest() {
-	var a = make([]int, 0, 4)
-	fmt.Println(len(a), cap(a))
+// //slice的坑要牢记
+// func mytest() {
+// 	var a = make([]int, 0, 4)
+// 	fmt.Println(len(a), cap(a))
 
-	// fmt.Printf("%p\n", &a[0])
-	a = append(a, 1, 2)
-	fmt.Println(len(a), cap(a), a)
+// 	// fmt.Printf("%p\n", &a[0])
+// 	a = append(a, 1, 2)
+// 	fmt.Println(len(a), cap(a), a)
 
-	fmt.Printf("%p\n", &a[0])
-	b := append(a, 1, 2, 3, 12, 31, 21, 31, 31, 13, 13, 31, 31, 31)
-	fmt.Println(len(a), cap(a), a)
+// 	fmt.Printf("%p\n", &a[0])
+// 	b := append(a, 1, 2, 3, 12, 31, 21, 31, 31, 13, 13, 31, 31, 31)
+// 	fmt.Println(len(a), cap(a), a)
 
-	fmt.Printf("%p\n", &a[0])
-	fmt.Println(len(b), cap(b), b)
-	fmt.Printf("%p\n", &b[0])
-	a = append(a, 0)
-	fmt.Println(a, b)
+// 	fmt.Printf("%p\n", &a[0])
+// 	fmt.Println(len(b), cap(b), b)
+// 	fmt.Printf("%p\n", &b[0])
+// 	a = append(a, 0)
+// 	fmt.Println(a, b)
 
-	if testmap == nil {
-		fmt.Println("make map")
-		testmap = make(map[string]int)
-	}
+// 	if testmap == nil {
+// 		fmt.Println("make map")
+// 		testmap = make(map[string]int)
+// 	}
 
-	testmap["adsf"] = 1
-	aaaa := myio.GetActiveLicenseKeyItem()
-	if aaaa == nil {
-		fmt.Println("nil")
-	}
-	fmt.Println(aaaa, "==", len(aaaa))
-	// var aa [10]int
-	// aa = append(aa, 1)
-	// fmt.Println(aa)
-}
+// 	testmap["adsf"] = 1
+// 	aaaa := myio.GetActiveLicenseKeyItem()
+// 	if aaaa == nil {
+// 		fmt.Println("nil")
+// 	}
+// 	fmt.Println(aaaa, "==", len(aaaa))
+// 	// var aa [10]int
+// 	// aa = append(aa, 1)
+// 	// fmt.Println(aa)
+// }
 
 func main() {
 	// log.Println("test astaxie's log")
@@ -85,6 +84,7 @@ func main() {
 	// myredis.MyRedisMain()
 	// mycawler.MyMain()
 	// select {}
-	mytest()
+	// mytest()
+	myio.StartRoutine()
 
 }
