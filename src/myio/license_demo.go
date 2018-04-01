@@ -2,6 +2,7 @@ package myio
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
@@ -115,7 +116,7 @@ func monitor() {
 func sendmsg() {
 	tt := time.Tick(time.Second * 10)
 	for _ = range tt {
-		for i := 0; i < 200*32; i++ {
+		for i := 0; i < 100*32; i++ {
 			select {
 			case t.TaskQue[i%32] <- i:
 			default:
@@ -132,6 +133,54 @@ func workroutine(index int) {
 	}
 }
 
+var a = rand.New(rand.NewSource(23))
+
 func realwork(str int) {
-	time.Sleep(time.Millisecond * 150)
+	st := a.Intn(1000)
+	time.Sleep(time.Millisecond * time.Duration(150+st))
+}
+
+//Pop点里的整体值 40
+//每个设备的capset 设备数是变化的 1 2 3 4 5 3 2 5 6 7 3 | 2 1
+//分配要均匀
+
+//每5秒刷新一次，保持于数据库相同即可
+type PopLicense struct {
+	Popid  int
+	LicKey map[string]*struct {
+		MaxVal     int //pop点的信息一般是不动的，可以不加锁
+		ReserveVal int
+	}
+}
+
+var m map[int]*PopLicense
+
+// 注册的时候直接写内存,如果内存中的数据没有，更新内存，同时使用merge命令更新DB。DB可能由于竞争写失败，没有关系
+// 直接忽略即可，但是内存中的数据就不要保留了。我们可以等待下一次写入。
+// 这里的数据可以每3秒从DBload一次
+type DevLicense struct {
+	Devid  int
+	LicKey map[string]*struct {
+		lock     sync.RWMutex
+		MaxVal   int
+		AllocVal int
+		UsedVal  int
+	}
+}
+
+var n map[int]*DevLicense
+
+func RefeshPopLicense() {
+
+}
+
+func computePoplicense(popid int) {
+	// poplicense := getpoplicense(popid)
+
+	// getdevinfo()
+
+}
+
+func getpoplicense(popid int) int {
+	return 40
 }

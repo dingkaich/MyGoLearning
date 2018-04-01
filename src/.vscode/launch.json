@@ -14,7 +14,8 @@
             "env": {
                 "GOPATH": "/Users/dingkai/Golang/MyGoLearning"
                 },
-            "args": [],
+            // "args": ["-port=99","-listen=0.0.0.0","dingkai","goodboy",],
+            "args": ["-h"],
             "showLog": false
         }
     ]

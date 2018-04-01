@@ -28,9 +28,10 @@ var client *redis.Client
 
 func DBinit() {
 	client = redis.NewClient(&redis.Options{
-		Addr:     "192.168.0.104:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		//Addr:     "192.168.0.104:6379",
+		Addr:     "106.14.179.186:6379",
+		Password: "dingkai", // no password set
+		DB:       0,         // use default DB
 	})
 
 	pong, err := client.Ping().Result()
