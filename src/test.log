@@ -110,3 +110,6 @@
 2017/07/22 02:52:34 [W] json is a type of kv like map[key:2016]
 2017/07/22 02:52:34 [E] 1024 is a very good game
 2017/07/22 02:52:34 [C] oh,crash
+2018/04/05 21:37:48 mylog.go:15: this is file
+2018/04/05 21:37:58 mylog.go:15: this is file
+2018/04/05 21:38:16 mylog.go:15: this is file

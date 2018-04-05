@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"mylog"
-	"os"
+	"mylogrus"
 )
 
 // //	"github.com/beego/logs"
@@ -45,7 +43,7 @@ import (
 // }
 
 func main() {
-	fmt.Println(os.Args[1:])
+	//fmt.Println(os.Args[1:])
 	// log.Println("test astaxie's log")
 	// logs.SetLogger(logs.AdapterFile, `{"filename":"test.log"}`)
 	// l := logs.GetLogger()
@@ -80,7 +78,7 @@ func main() {
 	// 	i++
 	// 	fmt.Println("good", i)
 	// }
-
+	//mylog.MylogMain1()
 	//mynet.MyNetMain()
 	//myhttp.MyhttpMain()
 	// myfileserver.FileserverMain()
@@ -95,9 +93,8 @@ func main() {
 	// 	fmt.Println(a)
 	// }
 	// mycrypt.MycryptMain()
-	// mylogrus.MylogrusMain()
-	
-	// myflags.MyflagsMain()
+	mylogrus.MylogrusMain()
 
+	// myflags.MyflagsMain()
 
 }
