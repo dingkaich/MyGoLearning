@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"mylogrus"
+	"mylog"
 	"os"
 )
 
@@ -95,7 +95,9 @@ func main() {
 	// 	fmt.Println(a)
 	// }
 	// mycrypt.MycryptMain()
-	mylogrus.MylogrusMain()
+	// mylogrus.MylogrusMain()
+	
 	// myflags.MyflagsMain()
+
 
 }
