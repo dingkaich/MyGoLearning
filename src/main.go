@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mylogrus"
+	"mylog"
 )
 
 // //	"github.com/beego/logs"
@@ -93,8 +93,10 @@ func main() {
 	// 	fmt.Println(a)
 	// }
 	// mycrypt.MycryptMain()
-	mylogrus.MylogrusMain()
+	//mylogrus.MylogrusMain()
+	//myairbrake.Myairbrakemain()
 
-	// myflags.MyflagsMain()
+	//myflags.MyflagsMain()
+	mylog.Mylogmail()
 
 }

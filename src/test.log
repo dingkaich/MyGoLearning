@@ -113,3 +113,10 @@
 2018/04/05 21:37:48 mylog.go:15: this is file
 2018/04/05 21:37:58 mylog.go:15: this is file
 2018/04/05 21:38:16 mylog.go:15: this is file
+2018/04/06 23:04:45 mylog.go:24: this is file
+2018/04/06 23:17:46 mylog.go:24: this is file
+2018/04/06 23:18:06 mylog.go:24: this is file
+2018/04/06 23:18:24 mylog.go:24: this is file
+2018/04/06 23:19:26 mylog.go:24: this is file
+2018/04/06 23:35:19 mylog.go:24: this is file
+2018/04/06 23:35:43 mylog.go:24: this is file

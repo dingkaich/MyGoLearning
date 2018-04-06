@@ -2,6 +2,7 @@ package mylogrus
 
 import (
 	"os"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -20,7 +21,7 @@ func init() {
 }
 
 func MylogrusMain() {
-	//ConfigLocalFilesystemLogger("/Users/dingkai/Golang/MyGoLearning/src", "testlogrus.log", time.Hour*24, time.Hour*2)
+	ConfigLocalFilesystemLogger("/Users/dingkai/Golang/MyGoLearning/src", "testlogrus.log", time.Hour*24, time.Hour*2)
 
 	//log.WithFields(log.Fields{
 	//	"animal": "walrus",
