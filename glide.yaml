@@ -1,0 +1,29 @@
+package: .
+import:
+- package: github.com/PuerkitoBio/goquery
+  version: ~1.4.0
+- package: github.com/go-redis/redis
+  version: ~6.10.2
+- package: github.com/mattn/go-sqlite3
+  version: ~1.6.0
+- package: github.com/pkg/errors
+  version: ~0.8.0
+- package: github.com/rifflock/lfshook
+  version: ~2.3.0
+- package: github.com/sirupsen/logrus
+  version: ~1.0.5
+- package: golang.org/x/crypto/pbkdf2
+testImport:
+- package: github.com/fastly/go-utils
+  subpackages:
+  - strftime
+- package: github.com/jehiah/go-strftime
+- package: github.com/jonboulle/clockwork
+  version: ~0.1.0
+- package: github.com/lestrrat/go-envload
+- package: github.com/stretchr/testify
+  version: ~1.2.1
+  subpackages:
+  - assert
+- package: github.com/tebeka/strftime
+  version: ~0.1.2
