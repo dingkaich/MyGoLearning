@@ -1,6 +1,7 @@
 package myfileserver
 
 import (
+	mysql "MyGoLearning/myfileserver/sqlite"
 	"bytes"
 	"crypto/md5"
 	"encoding/base64"
@@ -11,7 +12,6 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
-	mysql "myfileserver/sqlite"
 	"net/http"
 	"os"
 	"path/filepath"

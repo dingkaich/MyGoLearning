@@ -1,9 +1,9 @@
 package myfileserver
 
 import (
+	mysql "MyGoLearning/myfileserver/sqlite"
 	"encoding/json"
 	"io/ioutil"
-	mysql "myfileserver/sqlite"
 )
 
 type config_parm struct {

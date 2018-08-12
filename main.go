@@ -1,14 +1,12 @@
 package main
 
 import (
-	"log"
-
-	logs "github.com/astaxie/beego/logs"
+	"MyGoLearning/myreflect"
 )
 
 func main() {
-	log.Printf("%s sadf 100%%s \n", "apple")
-	logs.Info("%s sadf 100%%s", "apple")
+	// log.Printf("%s sadf 100%%s \n", "apple")
+	// logs.Info("%s sadf 100%%s", "apple")
 	//fmt.Println(os.Args[1:])
 	// log.Println("test astaxie's log")
 	// logs.SetLogger(logs.AdapterFile, `{"filename":"test.log"}`)
@@ -66,5 +64,12 @@ func main() {
 
 	//myhttp.MyhttpMain()
 	// myhttp.Myclient1()
+	// mychannel.MychannelMain()
+	// mystruct.Mystructmain()
 
+	// http.Handle("/viewfile", http.StripPrefix("/viewfile", http.FileServer(http.Dir("/Users/dingkai/Golang"))))
+	// log.Fatal(http.ListenAndServe(":8080", nil))
+	// http.ListenAndServe(":8080", http.Handle(pattern, handler))
+	// mytemplate.MytemplateMain()
+	myreflect.MyReflectMain()
 }
