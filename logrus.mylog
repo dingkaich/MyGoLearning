@@ -1,0 +1,4 @@
+time="2018-08-22T23:58:11+08:00" level=info msg="go to myjsonrest"
+time="2018-08-22T23:58:11+08:00" level=info msg="begin listen"
+2018/08/22 23:58:16 ::1 - - 22/Aug/2018:23:58:16 +0800 "GET /message HTTP/1.1" 200 28
+message HTTP/1.1" [1;30m- "PostmanRuntime/6.4.1"[0m

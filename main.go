@@ -1,8 +1,6 @@
 package main
 
-import (
-	"MyGoLearning/myreflect"
-)
+import "MyGoLearning/myjsonrest"
 
 func main() {
 	// log.Printf("%s sadf 100%%s \n", "apple")
@@ -57,7 +55,7 @@ func main() {
 	// 	fmt.Println(a)
 	// }
 	// mycrypt.MycryptMain()
-	//mylogrus.MylogrusMain()
+	// mylogrus.MylogrusMain1()
 	//myairbrake.Myairbrakemain()
 
 	//myflags.MyflagsMain()
@@ -71,5 +69,6 @@ func main() {
 	// log.Fatal(http.ListenAndServe(":8080", nil))
 	// http.ListenAndServe(":8080", http.Handle(pattern, handler))
 	// mytemplate.MytemplateMain()
-	myreflect.MyReflectMain()
+	// myreflect.MyReflectMain()
+	myjsonrest.MyjsonrestMain()
 }
