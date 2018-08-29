@@ -1,6 +1,6 @@
 package main
 
-import "MyGoLearning/myjsonrest"
+import "MyGoLearning/myhttpclient"
 
 func main() {
 	// log.Printf("%s sadf 100%%s \n", "apple")
@@ -70,5 +70,6 @@ func main() {
 	// http.ListenAndServe(":8080", http.Handle(pattern, handler))
 	// mytemplate.MytemplateMain()
 	// myreflect.MyReflectMain()
-	myjsonrest.MyjsonrestMain()
+	//myjsonrest.MyjsonrestMain()
+	myhttpclient.MyhttpclientMain()
 }

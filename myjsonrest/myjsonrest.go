@@ -1,6 +1,7 @@
 package myjsonrest
 
 import (
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -36,7 +37,6 @@ func MyjsonrestMain() {
 
 	var mymiddleware = []rest.Middleware{
 		&rest.AccessLogApacheMiddleware{
-			Logger: log.New(mylog.Out, "", log.LstdFlags),
 			Format: rest.CommonLogFormat,
 		},
 		&rest.TimerMiddleware{},
@@ -46,6 +46,7 @@ func MyjsonrestMain() {
 			EnableResponseStackTrace: true,
 		},
 		&rest.JsonIndentMiddleware{},
+		// &rest.JsonpMiddleware{},
 		&rest.ContentTypeCheckerMiddleware{},
 	}
 
@@ -54,7 +55,9 @@ func MyjsonrestMain() {
 	api.Use(mymiddleware...)
 
 	router, err := rest.MakeRouter(
-		rest.Get("/message", func(w rest.ResponseWriter, req *rest.Request) {
+		rest.Post("/message", func(w rest.ResponseWriter, req *rest.Request) {
+			// fmt.Println("aaa")
+			io.Copy(os.Stderr, req.Body)
 			w.WriteJson(map[string]string{"Body": "Hello World!"})
 		}),
 	)
