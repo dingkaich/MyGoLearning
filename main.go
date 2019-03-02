@@ -1,6 +1,8 @@
 package main
 
-import "MyGoLearning/myhttpclient"
+import (
+	"MyGoLearning/myExcel"
+)
 
 func main() {
 	// log.Printf("%s sadf 100%%s \n", "apple")
@@ -71,5 +73,6 @@ func main() {
 	// mytemplate.MytemplateMain()
 	// myreflect.MyReflectMain()
 	//myjsonrest.MyjsonrestMain()
-	myhttpclient.MyhttpclientMain()
+	// myhttpclient.MyhttpclientMain()
+	myExcel.MyExcelMain()
 }
