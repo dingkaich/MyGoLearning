@@ -1,3 +1,7 @@
+/*
+具体使用方法:https://xuri.me/excelize/zh-hans/chart.html#line
+*/
+
 package myExcel
 
 import (
