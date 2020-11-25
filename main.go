@@ -1,11 +1,12 @@
 package main
 
 import (
-	"MyGoLearning/myExcel"
+	"log"
 )
 
 func main() {
-	// log.Printf("%s sadf 100%%s \n", "apple")
+
+	log.Printf("%s sadf 100%%s \n", "apple")
 	// logs.Info("%s sadf 100%%s", "apple")
 	//fmt.Println(os.Args[1:])
 	// log.Println("test astaxie's log")
@@ -74,5 +75,7 @@ func main() {
 	// myreflect.MyReflectMain()
 	//myjsonrest.MyjsonrestMain()
 	// myhttpclient.MyhttpclientMain()
-	myExcel.MyExcelMain()
+	// myExcel.MyExcelMain()
+	// myExcel.MyExcelMain1()
+
 }
