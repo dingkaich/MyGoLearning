@@ -1,6 +1,7 @@
 package main
 
 import (
+	"MyGoLearning/mychannel"
 	"log"
 )
 
@@ -77,5 +78,5 @@ func main() {
 	// myhttpclient.MyhttpclientMain()
 	// myExcel.MyExcelMain()
 	// myExcel.MyExcelMain1()
-
+	mychannel.MychannelMain1()
 }
