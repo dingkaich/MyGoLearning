@@ -17,6 +17,25 @@ close(ch)	panic		    成功	           panic
 /*
 关于channel的实现原理，可以参考以下说明：
 https://blog.csdn.net/u010853261/article/details/85231944
+
+channel 的主要特性
+（1）goroutine-safe
+hchan mutex
+
+（2）store values, pass in FIFO.
+copying into and out of hchan buffer
+
+（3）can cause goroutines to pause and resume.
+a）hchan sudog queues
+b）calls into the runtime scheduler (gopark, goready)
+
+（4）channel的高性能所在：
+a）调用runtime scheduler实现，OS thread不需要阻塞；
+b）跨goroutine栈可以直接进行读写；
+*/
+
+/*
+channel 的本质是一个带锁的消息队列。每一次数据进出都会持有锁。
 */
 
 func MychannelMain1() {
